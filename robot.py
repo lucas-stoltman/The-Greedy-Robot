@@ -73,6 +73,27 @@ class Robot:
         elif self._x > point.get_x() and self._y > point.get_y():
             self._direction = "southwest"
 
+    # move North once
+    def N(self):
+        self._y += 1
+        return True
+
+    # move South once
+    def S(self):
+        self._y -= 1
+        return True
+
+    # move East once
+    def E(self):
+        self._x += 1
+        return True
+
+    # move West once
+    def W(self):
+        self._x -= 1
+        return True
+
+
     # overloads
     def __str__(self):
         return f"({self._x}, {self._y})"
