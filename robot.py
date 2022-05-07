@@ -20,10 +20,6 @@ class Point:
     def get_y(self):
         return self._y
 
-    # TODO __str__
-    # TODO __repr__
-    # TODO __eq__
-
 
 class Robot:
     # variables
@@ -31,7 +27,7 @@ class Robot:
     _y = 0
     _num_paths = 0
 
-    # cardinal direction robot -> treasure
+    # cardinal direction from robot -> treasure
     _direction = ""
 
     # constructor
@@ -39,9 +35,17 @@ class Robot:
         self._x = x1
         self._y = y1
 
+    # getters
+    def get_x(self):
+        return self._x
+
+    def get_y(self):
+        return self._y
+
     def get_direction(self):
         return self._direction
 
+    # methods
     def find_direction(self, point: Point):
         # base case
         if self._x == point.get_x() and self._y == point.get_y():
@@ -69,9 +73,16 @@ class Robot:
         elif self._x > point.get_x() and self._y > point.get_y():
             self._direction = "southwest"
 
-    # TODO finish print
+    # overloads
     def __str__(self):
-        return f"{self._x}, {self._y}"
+        return f"({self._x}, {self._y})"
 
     def __repr__(self):
-        return f"{self._x}, {self._y}, {self._tx}, {self._ty}"
+        return "{self.__class__.__name__}({self._x}, " \
+               "{self._y})".format(self=self)
+
+    def __eq__(self, point: Point):
+        if self._x == point.get_x() and self._y == point.get_y():
+            return True
+        else:
+            return False
