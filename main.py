@@ -36,8 +36,8 @@ print("The treasure is:", rob.get_direction())
 
 # --- find_paths() ---
 print("\n---\033[1m", "find_paths()", "\033[0m---", )
-rob.find_paths(treasure)
-print(rob.print_path())
+rob.find_path(treasure)
+rob.print_paths()
 
 
 # # --- Movement Testing ---

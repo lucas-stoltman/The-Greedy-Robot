@@ -26,6 +26,7 @@ class Robot:
     _x = 0
     _y = 0
     _path = ""
+    _saved_paths = []
     _num_paths = 0
 
     # cardinal direction from robot -> treasure
@@ -75,65 +76,67 @@ class Robot:
             self._direction = "southwest"
 
     # TODO
-    # print routes
     # update _num_paths
     # update _path
-    def find_paths(self, treasure: Point):
+    def find_path(self, treasure: Point):
         import random
 
+        # check direction
         self.find_direction(treasure)
+
         # end case
         if self._direction == "beneath":
+            self._num_paths += 1
+            self._saved_paths.append(self._path)
             return True
         elif self._direction == "north":
             self.N()
-            self.find_paths(treasure)
+            self.find_path(treasure)
         elif self._direction == "south":
             self.S()
-            self.find_paths(treasure)
+            self.find_path(treasure)
         elif self._direction == "east":
             self.E()
-            self.find_paths(treasure)
+            self.find_path(treasure)
         elif self._direction == "west":
             self.W()
-            self.find_paths(treasure)
+            self.find_path(treasure)
         elif self._direction == "northeast":
             num = random.randint(0, 1)
             if num == 0:
                 self.N()
             else:
                 self.E()
-            self.find_paths(treasure)
+            self.find_path(treasure)
         elif self._direction == "northwest":
             num = random.randint(0, 1)
             if num == 0:
                 self.N()
             else:
                 self.W()
-            self.find_paths(treasure)
+            self.find_path(treasure)
         elif self._direction == "southeast":
             num = random.randint(0, 1)
             if num == 0:
                 self.S()
             else:
                 self.E()
-            self.find_paths(treasure)
+            self.find_path(treasure)
         elif self._direction == "southwest":
             num = random.randint(0, 1)
             if num == 0:
                 self.S()
             else:
                 self.W()
-            self.find_paths(treasure)
+            self.find_path(treasure)
         else:
             print("Error")
             return False
 
-
-
-
-    def print_path(self):
-        return self._path
+    def print_paths(self):
+        for i in self._saved_paths:
+            print(i)
+        return True
 
     # move North once
     def N(self):
