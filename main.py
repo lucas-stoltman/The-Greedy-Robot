@@ -9,11 +9,16 @@ import sys
 from robot import Robot
 from robot import Point
 
+# final input
+# x1 = int(sys.argv[1])
+# y1 = int(sys.argv[2])
+# x2 = int(sys.argv[3])
+# y2 = int(sys.argv[4])
 
-x1 = int(sys.argv[1])
-y1 = int(sys.argv[2])
-x2 = int(sys.argv[3])
-y2 = int(sys.argv[4])
+x1 = 1
+y1 = 1
+x2 = 1
+y2 = 1
 
 # debugging arguments
 print(f"Robot: ({x1},{y1})\n"
@@ -22,12 +27,8 @@ print(f"Robot: ({x1},{y1})\n"
 treasure = Point(x2, y2)
 rob = Robot(x1, y1)
 
+# --- find_direction() ---
+print("\n---\033[1m", "find_direction()", "\033[0m---", )
 rob.find_direction(treasure)
-print("Direction: ", rob.get_direction())
+print("The treasure is:", rob.get_direction())
 
-
-# make two point objects
-
-# robot | robot class
-
-# treasure | point class
