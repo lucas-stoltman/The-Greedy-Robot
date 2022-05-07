@@ -32,6 +32,21 @@ print("\n---\033[1m", "find_direction()", "\033[0m---", )
 rob.find_direction(treasure)
 print("The treasure is:", rob.get_direction())
 
+# --- Movement Testing ---
+print("\n---\033[1m", "Movement Testing", "\033[0m---", )
+print("Origin: ", rob)
+rob.N()
+print("\t N: ", rob)
+rob.E()
+print("\t E: ", rob)
+rob.W()
+print("\t W: ", rob)
+rob.S()
+print("\t S: ", rob)
+
+
+
+
 
 print("\n-----------------")
 print("---\033[1m", "overloads", "\033[0m---", )
