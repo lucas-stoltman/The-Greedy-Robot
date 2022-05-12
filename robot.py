@@ -3,7 +3,6 @@
 # April 29th, 2022
 # CSS 340 A, Dimpsey
 # Version: 1.0
-import sys
 
 
 class Point:
@@ -25,8 +24,6 @@ class Robot:
     # variables
     _x = 0
     _y = 0
-    _path = ""
-    _saved_paths = []
     _num_paths = 0
 
     # cardinal direction from robot -> treasure
@@ -48,119 +45,73 @@ class Robot:
         return self._direction
 
     # methods
-    def find_direction(self, treasure: Point):
+    def find_direction(self, treasure: Point, x=_x, y=_x):
         # base case
-        if self._x == treasure.get_x() and self._y == treasure.get_y():
-            self._direction = "beneath"
+        if x == treasure.get_x() and y == treasure.get_y():
+            self._direction = "arrived"
 
         # same x = directly N/S
-        if self._x == treasure.get_x():
-            if self._y < treasure.get_y():
+        if x == treasure.get_x():
+            if y < treasure.get_y():
                 self._direction = "north"
-            elif self._y > treasure.get_y():
+            elif y > treasure.get_y():
                 self._direction = "south"
 
         # same y = directly E/W
-        elif self._y == treasure.get_y():
-            if self._x < treasure.get_x():
+        elif y == treasure.get_y():
+            if x < treasure.get_x():
                 self._direction = "east"
-            elif self._x > treasure.get_x():
+            elif x > treasure.get_x():
                 self._direction = "west"
-        elif self._x < treasure.get_x() and self._y < treasure.get_y():
+
+        elif x < treasure.get_x() and y < treasure.get_y():
             self._direction = "northeast"
-        elif self._x < treasure.get_x() and self._y > treasure.get_y():
+        elif x < treasure.get_x() and y > treasure.get_y():
             self._direction = "southeast"
-        elif self._x > treasure.get_x() and self._y < treasure.get_y():
+        elif x > treasure.get_x() and y < treasure.get_y():
             self._direction = "northwest"
-        elif self._x > treasure.get_x() and self._y > treasure.get_y():
+        elif x > treasure.get_x() and y > treasure.get_y():
             self._direction = "southwest"
 
-    # TODO
-    # update _num_paths
-    # update _path
-    def find_path(self, treasure: Point):
-        import random
+    def find_path(self, treasure: Point, x=_x, y=_x, path_string=""):
 
         # check direction
-        self.find_direction(treasure)
+        self.find_direction(treasure, x, y)
 
-        # end case
-        if self._direction == "beneath":
+        if self._direction == "arrived":
             self._num_paths += 1
-            self._saved_paths.append(self._path)
+            print(path_string)
+            print(self._num_paths)
             return True
-        elif self._direction == "north":
-            self.N()
-            self.find_path(treasure)
+
+        # north case
+        if self._direction == "north":
+            if y < treasure.get_y():
+                y += 1
+                path_string += "N"
+                self.find_path(treasure, x, y, path_string)
+        # south case
         elif self._direction == "south":
-            self.S()
-            self.find_path(treasure)
+            if y > treasure.get_y():
+                y -= 1
+                path_string += "S"
+                self.find_path(treasure, x, y, path_string)
+        # east case
         elif self._direction == "east":
-            self.E()
-            self.find_path(treasure)
+            if x < treasure.get_x():
+                x += 1
+                path_string += "E"
+                self.find_path(treasure, x, y, path_string)
+        # west case
         elif self._direction == "west":
-            self.W()
-            self.find_path(treasure)
-        elif self._direction == "northeast":
-            num = random.randint(0, 1)
-            if num == 0:
-                self.N()
-            else:
-                self.E()
-            self.find_path(treasure)
-        elif self._direction == "northwest":
-            num = random.randint(0, 1)
-            if num == 0:
-                self.N()
-            else:
-                self.W()
-            self.find_path(treasure)
-        elif self._direction == "southeast":
-            num = random.randint(0, 1)
-            if num == 0:
-                self.S()
-            else:
-                self.E()
-            self.find_path(treasure)
-        elif self._direction == "southwest":
-            num = random.randint(0, 1)
-            if num == 0:
-                self.S()
-            else:
-                self.W()
-            self.find_path(treasure)
+            if x > treasure.get_x():
+                x -= 1
+                path_string += "W"
+                self.find_path(treasure, x, y, path_string)
+
         else:
-            print("Error")
+            print("ERROR")
             return False
-
-    def print_paths(self):
-        for i in self._saved_paths:
-            print(i)
-        return True
-
-    # move North once
-    def N(self):
-        self._y += 1
-        self._path += "N"
-        return True
-
-    # move South once
-    def S(self):
-        self._y -= 1
-        self._path += "S"
-        return True
-
-    # move East once
-    def E(self):
-        self._x += 1
-        self._path += "E"
-        return True
-
-    # move West once
-    def W(self):
-        self._x -= 1
-        self._path += "W"
-        return True
 
     # overloads
     def __str__(self):
