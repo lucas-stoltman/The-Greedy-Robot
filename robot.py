@@ -45,7 +45,8 @@ class Robot:
         return self._direction
 
     # methods
-    def find_direction(self, treasure: Point, x=_x, y=_x):
+    def find_direction(self, treasure: Point, x=0, y=0):
+
         # base case
         if x == treasure.get_x() and y == treasure.get_y():
             self._direction = "arrived"
@@ -78,14 +79,14 @@ class Robot:
         # check direction
         self.find_direction(treasure, x, y)
 
+        # base case
         if self._direction == "arrived":
             self._num_paths += 1
             print(path_string)
-            print(self._num_paths)
             return True
 
         # north case
-        if self._direction == "north":
+        elif self._direction == "north":
             if y < treasure.get_y():
                 y += 1
                 path_string += "N"
@@ -108,10 +109,36 @@ class Robot:
                 x -= 1
                 path_string += "W"
                 self.find_path(treasure, x, y, path_string)
-
+        # northeast case
+        elif self._direction == "northeast":
+            # north
+            self.find_path(treasure, x, y + 1, path_string + "N")
+            # east
+            self.find_path(treasure, x + 1, y, path_string + "E")
+        # northwest case
+        elif self._direction == "northwest":
+            # north
+            self.find_path(treasure, x, y + 1, path_string + "N")
+            # west
+            self.find_path(treasure, x - 1, y, path_string + "W")
+        # southeast case
+        elif self._direction == "southeast":
+            # south
+            self.find_path(treasure, x, y - 1, path_string + "S")
+            # east
+            self.find_path(treasure, x + 1, y, path_string + "E")
+        # southwest case
+        elif self._direction == "southwest":
+            # south
+            self.find_path(treasure, x, y - 1, path_string + "S")
+            # west
+            self.find_path(treasure, x - 1, y, path_string + "W")
         else:
             print("ERROR")
             return False
+
+    def get_num_paths(self):
+        print("Number of paths:", self._num_paths)
 
     # overloads
     def __str__(self):
