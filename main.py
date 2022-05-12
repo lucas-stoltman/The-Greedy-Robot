@@ -27,5 +27,5 @@ rob = Robot(x1, y1)
 treasure = Point(x2, y2)
 
 rob.find_direction(treasure)
-rob.find_path(treasure)
+rob.find_path(treasure, x1, y1)
 rob.get_num_paths()
